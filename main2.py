@@ -5,23 +5,23 @@ from uuid import uuid4, UUID
 
 app = FastAPI(title="Notes CRUD API")
 
-# In-memory "database"
+
 notes_db = {}
 
-# Base model (title, content)
+
 class NoteBase(BaseModel):
     title: str
     content: str
 
-# Model for creating a note (no id)
+
 class NoteCreate(NoteBase):
     pass
 
-# Model for reading/updating notes (with id)
+
 class Note(NoteBase):
     id: UUID
 
-# Create a new note
+
 @app.post("/notes/", response_model=Note)
 def create_note(note: NoteCreate):
     note_id = uuid4()
@@ -36,7 +36,7 @@ def get_notes():
 
 # Get a note by ID
 @app.get("/notes/{note_id}", response_model=Note)
-def get_note(note_id: UUID):
+def get_a_note(note_id: UUID):
     if note_id in notes_db:
         return notes_db[note_id]
     raise HTTPException(status_code=404, detail="Note not found")
